@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt Semestralny - Katalog Książek</title>
+    <link rel="icon" type="image/png" href="logo.png?v=2">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo" id="nav-logo">
+                <img src="logo.png" alt="Logo" class="logo-img">
+                <span class="logo-text">Find<span class="accent-text">Books</span></span>
+            </a>
+            <nav class="nav-links">
+                <button id="btn-show-list" class="nav-link active">Lista książek</button>
+                <button id="btn-show-add" class="nav-link btn-primary">+ Dodaj książkę</button>
+            </nav>
+        </div>
+    </header>
+    <main class="container content-wrapper">
+        
+        <section id="section-list" class="view-section">
+            <div class="section-header">
+                <h2>Katalog Książek</h2>
+                <input type="text" id="search-bar" placeholder="Szukaj po tytule lub autorze...">
+            </div>
+            
+            <div id="empty-state" class="empty-state hidden">
+                <p>Brak książek w bazie danych. Dodaj swoją pierwszą książkę!</p>
+            </div>
+
+            <div id="books-grid" class="books-grid"></div>
+        </section>
+
+        <section id="section-add" class="view-section hidden">
+            <div class="form-card">
+                <h2>Dodaj nową książkę</h2>
+                <p class="subtitle">Wprowadź podstawowe dane, aby zasilić bazę danych projektu.</p>
+                
+                <form id="add-book-form">
+                    <div class="form-group">
+                        <label for="book-title">Tytuł książki *</label>
+                        <input type="text" id="book-title" required placeholder="np. Wiedźmin: Ostatnie życzenie">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-author">Autor *</label>
+                        <input type="text" id="book-author" required placeholder="np. Andrzej Sapkowski">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-cover">URL okładki (opcjonalnie)</label>
+                        <input type="url" id="book-cover" placeholder="https://example.com/okladka.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-desc">Opis książki *</label>
+                        <textarea id="book-desc" rows="5" required placeholder="Krótki opis fabuły..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-cancel" class="btn-secondary">Anuluj</button>
+                        <button type="submit" class="btn-submit">Zapisz do bazy</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="book-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-cover-wrapper">
+                    <img id="modal-cover" src="" alt="Okładka">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-title">Tytuł</h2>
+                    <h3 id="modal-author">Autor</h3>
+                    <hr>
+                    <p class="modal-label">Opis:</p>
+                    <p id="modal-desc">Pełny tekst opisu...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background-color: #1e293b; border-top: 1px solid #334155; padding: 20px 0; margin-top: auto; text-align: center; font-size: 0.9rem; color: #94a3b8;">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <p style="margin: 5px 0; font-weight: 600; color: #f8fafc;">Autorzy programu:</p>
+            <p style="margin: 5px 0;">Volodymyr Fylypiv 75668 &bull; Nikita Korchahin 75660 &bull; Vladyslav Cholovskyi 75666</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
