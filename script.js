@@ -234,6 +234,10 @@ addBookForm?.addEventListener('submit', async (e) => {
 
     const rating =
         document.getElementById('book-rating').value;
+    if (!rating || rating < 1 || rating > 10) {
+    alert("Ocena musi być od 1 do 10");
+    return;
+    }
 
     const cover =
         document.getElementById('book-cover').value.trim();
