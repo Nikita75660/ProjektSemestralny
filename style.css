@@ -414,3 +414,19 @@ body {
 .footer-content p {
     margin: 5px 0;
 }
+
+.btn-delete {
+    margin-top: 8px;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #dc2626;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-delete:hover {
+    background: #b91c1c;
+}
