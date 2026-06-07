@@ -15,6 +15,7 @@ const btnShowAdd = document.getElementById('btn-show-add');
 const booksGrid = document.getElementById('books-grid');
 const emptyState = document.getElementById('empty-state');
 const searchBar = document.getElementById('search-bar');
+const sortBooks = document.getElementById('sort-books');
 const addBookForm = document.getElementById('add-book-form');
 const navLogo = document.getElementById('nav-logo');
 
@@ -265,5 +266,18 @@ addBookForm?.addEventListener('submit', async (e) => {
 
     showListView();
 });
+sortBooks?.addEventListener('change', () => {
 
+    let sortedBooks = [...books];
+
+    if (sortBooks.value === 'rating-desc') {
+        sortedBooks.sort((a, b) => b.rating - a.rating);
+    }
+
+    if (sortBooks.value === 'rating-asc') {
+        sortedBooks.sort((a, b) => a.rating - b.rating);
+    }
+
+    renderBooks(sortedBooks);
+});
 loadBooks();
