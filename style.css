@@ -428,11 +428,37 @@ body {
     font-weight: 600;
 }
 
-#sort-books {
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-}
+
 .btn-delete:hover {
     background: #b91c1c;
+}
+
+#genre-filter,
+#sort-books {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#genre-filter:hover,
+#sort-books:hover {
+    border-color: #3b82f6;
+}
+
+#genre-filter:focus,
+#sort-books:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+#genre-filter option,
+#sort-books option {
+    background-color: #1e293b;
+    color: #f8fafc;
 }
