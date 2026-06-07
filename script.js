@@ -15,6 +15,7 @@ const btnShowAdd = document.getElementById('btn-show-add');
 const booksGrid = document.getElementById('books-grid');
 const emptyState = document.getElementById('empty-state');
 const searchBar = document.getElementById('search-bar');
+const genreFilter = document.getElementById('genre-filter');
 const sortBooks = document.getElementById('sort-books');
 const addBookForm = document.getElementById('add-book-form');
 const navLogo = document.getElementById('nav-logo');
@@ -49,6 +50,28 @@ async function loadBooks() {
     }));
 
     renderBooks(books);
+    populateGenres();
+}
+function populateGenres() {
+
+    const genres = [...new Set(
+        books
+            .map(book => book.genre)
+            .filter(Boolean)
+    )];
+
+    genreFilter.innerHTML =
+        '<option value="">Wszystkie gatunki</option>';
+
+    genres.sort().forEach(genre => {
+
+        const option = document.createElement('option');
+
+        option.value = genre;
+        option.textContent = genre;
+
+        genreFilter.appendChild(option);
+    });
 }
 
 function showListView() {
@@ -177,17 +200,9 @@ function renderBooks(booksToRender) {
 
 
 
-searchBar?.addEventListener('input', (e) => {
+searchBar?.addEventListener('input', filterBooks);
 
-    const searchTerm = e.target.value.toLowerCase();
-
-    const filtered = books.filter(book =>
-        book.title.toLowerCase().includes(searchTerm) ||
-        book.author.toLowerCase().includes(searchTerm)
-    );
-
-    renderBooks(filtered);
-});
+genreFilter?.addEventListener('change', filterBooks);
 
 function openBookModal(id) {
 
@@ -270,18 +285,33 @@ addBookForm?.addEventListener('submit', async (e) => {
 
     showListView();
 });
-sortBooks?.addEventListener('change', () => {
+sortBooks?.addEventListener('change', filterBooks);
+function filterBooks() {
 
-    let sortedBooks = [...books];
+    const searchTerm = searchBar.value.toLowerCase();
+    const selectedGenre = genreFilter.value;
+
+    let filtered = books.filter(book => {
+
+        const matchesSearch =
+            book.title.toLowerCase().includes(searchTerm) ||
+            book.author.toLowerCase().includes(searchTerm);
+
+        const matchesGenre =
+            selectedGenre === "" ||
+            book.genre === selectedGenre;
+
+        return matchesSearch && matchesGenre;
+    });
 
     if (sortBooks.value === 'rating-desc') {
-        sortedBooks.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => b.rating - a.rating);
     }
 
     if (sortBooks.value === 'rating-asc') {
-        sortedBooks.sort((a, b) => a.rating - b.rating);
+        filtered.sort((a, b) => a.rating - b.rating);
     }
 
-    renderBooks(sortedBooks);
-});
+    renderBooks(filtered);
+}
 loadBooks();
