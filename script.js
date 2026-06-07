@@ -139,10 +139,19 @@ function renderBooks(booksToRender) {
 
         const id = Number(e.target.dataset.id);
 
+        const password = prompt(
+            "Podaj hasło administratora:"
+        );
+        
+        if (password !== "1234") {
+            alert("Nieprawidłowe hasło!");
+            return;
+        }
+        
         const confirmDelete = confirm(
             "Czy na pewno chcesz usunąć tę książkę?"
         );
-
+        
         if (!confirmDelete) return;
 
         const { error } = await supabaseClient
