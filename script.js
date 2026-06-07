@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://xohpancxryzudbofmdtv.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_YM8tlXs1_eNVVC4kbeuNLg_yAG3VRrT";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
@@ -26,7 +26,7 @@ const modalAuthor = document.getElementById('modal-author');
 const modalDesc = document.getElementById('modal-desc');
 
 async function loadBooks() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('books')
         .select('*')
         .order('id', { ascending: false });
@@ -196,7 +196,7 @@ addBookForm?.addEventListener('submit', async (e) => {
     const desc =
         document.getElementById('book-desc').value.trim();
 
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from('books')
         .insert([
             {
