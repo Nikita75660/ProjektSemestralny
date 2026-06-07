@@ -27,8 +27,16 @@
         <section id="section-list" class="view-section">
             <div class="section-header">
                 <h2>Katalog Książek</h2>
-                <input type="text" id="search-bar" placeholder="Szukaj po tytule lub autorze...">
-            </div>
+            
+                <input type="text" id="search-bar"
+                       placeholder="Szukaj po tytule lub autorze...">
+
+                <select id="sort-books">
+                    <option value="default">Sortowanie</option>
+                    <option value="rating-desc">Ocena ↓</option>
+                    <option value="rating-asc">Ocena ↑</option>
+                </select>
+            </div>        
             
             <div id="empty-state" class="empty-state hidden">
                 <p>Brak książek w bazie danych. Dodaj swoją pierwszą książkę!</p>
