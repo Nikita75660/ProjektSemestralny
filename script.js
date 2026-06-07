@@ -1,26 +1,37 @@
-let books = JSON.parse(localStorage.getItem('books')) || [];
+const SUPABASE_URL = "https://xohpancxryzudbofmdtv.supabase.co";
 
-const initialBooks = [
-    {
-        id: 1,
-        title: "Wiedźmin: Ostatnie życzenie",
-        author: "Andrzej Sapkowski",
-        cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=400",
-        desc: "Zbiór opowiadań fantasy, który wprowadza nas w świat Geralta z Rivii. Genialna kreacja świata, dekonstrukcja klasycznych baśni i unikalny styl autora sprawiają, że to pozycja obowiązkowa."
-    },
-    {
-        id: 2,
-        title: "Hobbit, czyli tam i z powrotem",
-        author: "J.R.R. Tolkien",
-        cover: "",
-        desc: "Klasyka literatury fantasy. Historia Bilbo Bagginsa, który wyrusza w wielką i niebezpieczną podróż, by wraz z krasnoludami odzyskać ich dawne królestwo z rąk smoka Smauga."
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvaHBhbmN4cnl6dWRib2ZtZHR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4Mjg0OTQsImV4cCI6MjA5NjQwNDQ5NH0.v9D9ZoqStAokNXbXtLsneOTca-CZF5kDgQQZ-eHjmMM";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+let books = [];
+
+async function loadBooks() {
+    const { data, error } = await supabase
+        .from('books')
+        .select('*')
+        .order('id', { ascending: false });
+
+    if (error) {
+        console.error(error);
+        alert(error.message);
+        return;
     }
-];
 
-if (books.length === 0) {
-    books = initialBooks;
-    localStorage.setItem('books', JSON.stringify(books));
+    books = data.map(book => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        cover: book.cover,
+        desc: book.description
+    }));
+
+    renderBooks(books);
 }
+
 
 const sectionList = document.getElementById('section-list');
 const sectionAdd = document.getElementById('section-add');
@@ -119,7 +130,7 @@ function openBookModal(id) {
 closeModal.addEventListener('click', () => modal.classList.add('hidden'));
 window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
 
-addBookForm.addEventListener('submit', (e) => {
+addBookForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const title = document.getElementById('book-title').value.trim();
@@ -127,19 +138,27 @@ addBookForm.addEventListener('submit', (e) => {
     const cover = document.getElementById('book-cover').value.trim();
     const desc = document.getElementById('book-desc').value.trim();
 
-    const newBook = {
-        id: Date.now(),
-        title: title,
-        author: author,
-        cover: cover,
-        desc: desc
-    };
+    const { error } = await supabase
+        .from('books')
+        .insert([
+            {
+                title,
+                author,
+                cover,
+                description: desc
+            }
+        ]);
 
-    books.push(newBook);
-    localStorage.setItem('books', JSON.stringify(books));
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
     addBookForm.reset();
+
+    await loadBooks();
+
     showListView();
 });
-
+loadBooks();
 showListView();
