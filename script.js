@@ -134,8 +134,7 @@ function renderBooks(booksToRender) {
             );
         });
     });
-}
-document.querySelectorAll('.btn-delete').forEach(button => {
+    document.querySelectorAll('.btn-delete').forEach(button => {
     button.addEventListener('click', async (e) => {
 
         const id = Number(e.target.dataset.id);
@@ -156,9 +155,17 @@ document.querySelectorAll('.btn-delete').forEach(button => {
             return;
         }
 
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
         await loadBooks();
     });
 });
+}
+
+
 
 searchBar?.addEventListener('input', (e) => {
 
