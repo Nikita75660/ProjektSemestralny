@@ -427,6 +427,11 @@ body {
     font-weight: 600;
 }
 
+#sort-books {
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 .btn-delete:hover {
     background: #b91c1c;
 }
