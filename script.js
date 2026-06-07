@@ -117,11 +117,15 @@ function renderBooks(booksToRender) {
                 <button class="btn-details" data-id="${book.id}">
                     Szczegóły
                 </button>
+                <button class="btn-delete" data-id="${book.id}">
+                    Usuń
+                </button>
             </div>
         `;
 
         booksGrid.appendChild(card);
     });
+
 
     document.querySelectorAll('.btn-details').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -131,6 +135,30 @@ function renderBooks(booksToRender) {
         });
     });
 }
+document.querySelectorAll('.btn-delete').forEach(button => {
+    button.addEventListener('click', async (e) => {
+
+        const id = Number(e.target.dataset.id);
+
+        const confirmDelete = confirm(
+            "Czy na pewno chcesz usunąć tę książkę?"
+        );
+
+        if (!confirmDelete) return;
+
+        const { error } = await supabaseClient
+            .from('books')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        await loadBooks();
+    });
+});
 
 searchBar?.addEventListener('input', (e) => {
 
