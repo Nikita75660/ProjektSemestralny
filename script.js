@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://xohpancxryzudbofmdtv.supabase.co";
-const SUPABASE_ANON_KEY = "ТВОЙ_ANON_KEY";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvaHBhbmN4cnl6dWRib2ZtZHR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4Mjg0OTQsImV4cCI6MjA5NjQwNDQ5NH0.v9D9ZoqStAokNXbXtLsneOTca-CZF5kDgQQZ-eHjmMM";
 
 const supabase = window.supabase.createClient(
     SUPABASE_URL,
